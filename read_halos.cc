@@ -1,10 +1,10 @@
-#include <valarary>
+#include <valarray>
 #include <iostream>
 #include <fstream>
 #include <cstdint>
 #include <string>
 
-extern uint64_t N_cell_x ;
+extern uint64_t N_halo ;
 
 void Read_Halos( const std::string fname,
 								 std::valarray<float>& Pos_x,
@@ -20,17 +20,17 @@ void Read_Halos( const std::string fname,
 		exit( EXIT_FAILURE ) ;
 	}
 
-	in.read( (char*)&N_cell_x, sizeof(uint64_t) ) ;
+	in.read( (char*)&N_halo, sizeof(uint64_t) ) ;
 
-	Pos_x.resize( N_cell_x ) ;
-	Pos_y.resize( N_cell_x ) ;
-	Pos_z.resize( N_cell_x ) ;
-	  Lum.resize( N_cell_x ) ;
+	Pos_x.resize( N_halo ) ;
+	Pos_y.resize( N_halo ) ;
+	Pos_z.resize( N_halo ) ;
+	  Lum.resize( N_halo ) ;
 
-	in.read( (char*)&Pos_x[0], sizeof(float)*N_cell_x*N_cell_x*N_cell_x ) ;
-	in.read( (char*)&Pos_y[0], sizeof(float)*N_cell_x*N_cell_x*N_cell_x ) ;
-	in.read( (char*)&Pos_z[0], sizeof(float)*N_cell_x*N_cell_x*N_cell_x ) ;
-	in.read( (char*)&Lum[0],   sizeof(float)*N_cell_x*N_cell_x*N_cell_x ) ;
+	in.read( (char*)&Pos_x[0], sizeof(float)*N_halo ) ;
+	in.read( (char*)&Pos_y[0], sizeof(float)*N_halo ) ;
+	in.read( (char*)&Pos_z[0], sizeof(float)*N_halo ) ;
+	in.read( (char*)&Lum[0],   sizeof(float)*N_halo ) ;
 
 	in.close() ;
 }

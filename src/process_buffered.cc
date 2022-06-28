@@ -36,7 +36,7 @@ void LIM_Buffered( ) {
 
 	std::valarray<float> Map( N_cell_x * N_cell_x * N_cell_x ) ;
 
-  Init_Field( Map ) ;
+  Init_Map( Map ) ;
 
 	for( uint32_t i = 0; i < loop; ++i ) {
 
@@ -58,12 +58,3 @@ void LIM_Buffered( ) {
 	Write_Map( Map ) ;
 
 } // End of LIM_Buffered()
-
-void Init_Field( std::valarray<float>& Field ) {
-
-	uint_fast64_t i ;
-
-#pragma omp parallel for num_threads( 4 )
-	for( i=0; i<Field.size(); ++i ) Field[i] = 0.0 ;
-
-}

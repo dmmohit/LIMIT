@@ -4,8 +4,6 @@
 
 extern uint64_t N_cell_x_orig ;
 extern uint64_t N_cell_x      ;
-extern float    grid_fac = 1.0 * N_cell_x_orig / N_cell_x ;
-extern float    fac      = 1.0 / grid_fac ;
 
 void Coarse_Grid( std::valarray<float>& Pos_x,
 									std::valarray<float>& Pos_y,
@@ -13,6 +11,9 @@ void Coarse_Grid( std::valarray<float>& Pos_x,
 									uint32_t buff_sz             ) {
 
 	uint_fast64_t i ;
+
+	float grid_fac = 1.0 * N_cell_x_orig / N_cell_x ;
+  float fac      = 1.0 / grid_fac ;
 
 #pragma omp parallel num_threads( 4 )
 {

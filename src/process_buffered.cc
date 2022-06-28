@@ -4,7 +4,7 @@
 #include  <cstdint>
 #include   <string>
 
-extern std::string Dir
+extern std::string Dir ;
 
 void LIM_Buffered( ) {
 
@@ -32,9 +32,9 @@ void LIM_Buffered( ) {
 		{&Pos_x[0],
 		 &Pos_y[0],
 		 &Pos_z[0],
-		 &Mass [0] } ;
+		 &Lum  [0] } ;
 
-	std::valarray<float> Map( cube(N_cell_x) ) ;
+	std::valarray<float> Map( N_cell_x * N_cell_x * N_cell_x ) ;
 
   Init_Field( Map ) ;
 

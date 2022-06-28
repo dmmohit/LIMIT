@@ -1,4 +1,12 @@
-void LIM_Buffered( const std::string Dir ) {
+#include <valarray>
+#include    <array>
+#include  <fstream>
+#include  <cstdint>
+#include   <string>
+
+extern std::string Dir
+
+void LIM_Buffered( ) {
 
 	std::ifstream num_halo {Dir+"/num_halos.txt"} ;
 
@@ -13,7 +21,7 @@ void LIM_Buffered( const std::string Dir ) {
 
 	std::array<std::ifstream,4> in ;
 
-	Open_Halos_Buffered( Dir, in ) ;
+	File_Handler( in, 0 ) ;
 
 	std::valarray<float> Pos_x( Buf_sz ) ;
 	std::valarray<float> Pos_y( Buf_sz ) ;
@@ -44,6 +52,8 @@ void LIM_Buffered( const std::string Dir ) {
 	SFR_Buffered          (                      Lum, rem      ) ;
 	Cii_Lum_Buffered      (                      Lum, rem      ) ;
 	Cloud_in_Cell_Buffered( Pos_x, Pos_y, Pos_z, Lum, rem, Map ) ;
+
+	File_Handler( in, 1 ) ;
 
 	Write_Map( Map ) ;
 

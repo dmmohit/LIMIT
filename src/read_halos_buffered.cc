@@ -27,8 +27,8 @@ void File_Handler( std::array<std::ifstream,4>& in,
 
 void Read_Halos_Buffered( std::array<std::ifstream,4>& in,
 												  std::array<char*,4>& buffer,
-												  uint32_t buf_sz            ) {
+												  uint32_t buff_sz            ) {
 
 	for( uint8_t i=0; i<4; ++i )
-		in[i].read( buffer[i], sizeof(float)*buf_sz ) ;
+		in[i].read( buffer[i], sizeof(float)*buff_sz ) ;
 }

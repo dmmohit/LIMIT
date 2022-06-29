@@ -1,5 +1,5 @@
-#include    <array>
-#include  <fstream>
+#include   <array>
+#include <fstream>
 #include <cstdint>
 #include <string>
 

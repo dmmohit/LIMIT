@@ -4,8 +4,9 @@
 #include   <string>
 #include    <omp.h>
 
-extern uint64_t N_cell_x ;
-extern uint64_t L_cMpc   ;
+extern uint64_t N_cell_x  ;
+extern uint64_t L_cMpc    ;
+extern std::string Output ;
 
 inline uint64_t Ind( uint64_t xx, uint64_t yy, uint64_t zz ) {
 
@@ -23,10 +24,9 @@ void Init_Map( std::valarray<float>& Map ) {
 
 }
 
-void Write_Map( std::valarray<float>& Map,
-								const std::string File     ) {
+void Write_Map( std::valarray<float>& Map ) {
 
-	std::ofstream out {File, std::ios_base::binary} ;
+	std::ofstream out {Output, std::ios_base::binary} ;
 
 	for( int i=0; i<3; ++i )
 		out.write( (char*)&N_cell_x, sizeof(uint64_t) ) ;

@@ -5,10 +5,10 @@
 extern uint64_t N_cell_x_orig ;
 extern uint64_t N_cell_x      ;
 
-void Coarse_Grid( std::valarray<float>& Pos_x,
-									std::valarray<float>& Pos_y,
-									std::valarray<float>& Pos_z,
-									uint32_t buff_sz             ) {
+void Coarse_Grid_Buffered( std::valarray<float>& Pos_x,
+													 std::valarray<float>& Pos_y,
+													 std::valarray<float>& Pos_z,
+													 uint32_t buff_sz             ) {
 
 	uint_fast64_t i ;
 

@@ -3,13 +3,12 @@
 
 #include <string>
 #include <valarray>
+#include    <array>
 
-void Read_Halos( const std::string,
-								 std::valarray<float>&,
-								 std::valarray<float>&,
-								 std::valarray<float>&,
-								 std::valarray<float>&  ) ;
+void File_Handler( std::array<std::ifstream,4>&,
+									 int8_t                       ) ;
 
-void Dump( const std::string,
-					 std::valarray<float>& ) ;
+void  Read_Halos_Buffered( std::array<std::ifstream,4>&,
+													 std::array<char*,4>&,
+													 uint32_t                     ) ;
 #endif

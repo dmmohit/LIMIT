@@ -4,13 +4,9 @@
 #include <valarray>
 #include <cstdint>
 
-void Coarse_Grid( std::valarray<float>&,
-									std::valarray<float>&,
-									std::valarray<float>&  ) ;
+void Coarse_Grid_Buffered( std::valarray<float>&,
+													 std::valarray<float>&,
+													 std::valarray<float>&,
+													 uint32_t              ) ;
 
-void Cloud_in_Cell( std::valarray<float>&,
-										std::valarray<float>&,
-										std::valarray<float>&,
-										std::valarray<float>&,
-										std::valarray<float>&  ) ;
 #endif

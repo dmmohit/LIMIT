@@ -4,6 +4,6 @@
 #include <valarray>
 #include  <cstdint>
 
-void SFR_buffered( std::valarray<float>&, uint32_t, float ) ;
+void SFR_Buffered( std::valarray<float>&, uint32_t, const float ) ;
 
 #endif

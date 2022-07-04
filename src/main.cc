@@ -1,24 +1,46 @@
-#include <string>
-#include <cstdio>
-#include <cstdint>
+#include <iostream>
+#include  <fstream>
+#include  <cstdint>
+#include   <string>
 
+#include "read_param.hh"
 #include "process_buffered.hh"
 
 std::string Dir    ;
 std::string Output ;
 
-float    h              = 0.7     ;
-float    L_cMpc         = 500 / h ;
-uint64_t N_cell_x_orig  = 13824   ;
-uint64_t N_cell_x       = 300     ;
-
 float z ;
 
 int main( int argc, char *argv[] ) {
 
-	Dir = argv[1] ;
+	Read_Param( argv[1] ) ;
 
-	sscanf( argv[2], "%f", &z ) ;
+	if( argv[2] == nullptr ) {
 
-	LIM_Buffered() ;
+		std::cerr << "Error! File for paths not given!\n" ;
+		exit( EXIT_FAILURE ) ;
+	}
+
+	std::ifstream inFile { argv[2] } ;
+
+	if( inFile.is_open() == false ) {
+
+		std::cerr << "Error! File for paths cannot be opened!\n" ;
+		exit( EXIT_FAILURE ) ;
+	}
+
+	while( (inFile >> Dir >> z >> Output).eof() != true ) {
+
+		LIM_Buffered() ;
+
+		std::cout << "\x1b[2K" << "\x1b[0G"
+							<< "Done for redshift: " << z
+							<< std::flush ;
+	}
+
+	inFile.close() ;
+
+	std::cout << "\x1b[2K" << "\x1b[0G"
+						<< "Done for all.\n"
+						<< std::flush ;
 }

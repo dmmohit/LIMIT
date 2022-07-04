@@ -1,0 +1,17 @@
+0.700
+0.270
+157.7e-6
+714.285714
+13824
+300
+100000000
+
+# The parameters in this file are as follows:
+#
+# 1st parameter -> h       ( hubble parameter                       )
+# 2nd parameter -> Omega_m ( matter density paramter                )
+# 3rd parameter -> Lambda  ( Wavelength of emission line in meters  )
+# 4th parameter -> L_cMpc  ( Length of Simulation side in cMpc      )
+# 5th parameter -> No. of cells in original simulation
+# 6th parameter -> No. of desired cells after coarse-gridding
+# 7th parameter -> Buffer size ( No. of halos to read at once  )

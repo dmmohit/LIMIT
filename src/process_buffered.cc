@@ -4,6 +4,8 @@
 #include  <fstream>
 #include  <cstdint>
 #include   <string>
+#include    <cmath>
+#include    <omp.h>
 
 #include    "read_halo.hh"
 #include    "grid_halo.hh"
@@ -16,8 +18,26 @@ extern std::string Dir    ;
 extern std::string Output ;
 extern float       z      ;
 
+extern float  h            ;
+extern float  Omega_m      ;
+extern double Lambda       ;
+
 extern uint64_t N_cell_x_orig ;
 extern uint64_t N_cell_x      ;
+
+extern uint32_t Buf_sz    ;
+
+inline double Hubble( float zz ) {
+
+	return 100*h*sqrt( Omega_m*powf(1.0+zz, 3.0) + (1.0-Omega_m) ) ;
+}
+
+inline uint64_t Ind( uint64_t xx, uint64_t yy, uint64_t zz ) {
+
+	return zz + N_cell_x * ( yy + N_cell_x * xx ) ;
+}
+
+void Intensity( std::valarray<float>& ) ;
 
 void LIM_Buffered( ) {
 
@@ -26,8 +46,6 @@ void LIM_Buffered( ) {
 	uint64_t N_halo    ;
 	num_halo >> N_halo ;
 	num_halo.close()   ;
-
-	const uint32_t Buf_sz = 100000000 ;
 
 	uint32_t loop = N_halo / Buf_sz ;
 	uint32_t rem  = N_halo % Buf_sz ;
@@ -66,6 +84,26 @@ void LIM_Buffered( ) {
 
 	File_Handler( in, 1 ) ;
 
+	Intensity( Map ) ;
 	Write_Map( Map ) ;
 
 } // End of LIM_Buffered()
+
+void Intensity( std::valarray<float>& Mapp ) {
+
+	const float  solar_lum   = 3.828e26               ; // in units of W
+	const double mpc3_to_m3  = pow( 3.086e22, 3.0 )   ;
+	const double lum_den_fac = solar_lum / mpc3_to_m3 ;
+	const float  jansky      = 1e-26                  ;
+	const float  Hubble_fac  = 3.24e-20               ;
+
+	float fac = lum_den_fac * Lambda / ( 4 * M_PI * Hubble_fac * Hubble( z ) )
+		                               / jansky ;
+	uint_fast64_t ii, jj, kk ;
+
+#pragma omp parallel for num_threads( 4 ) collapse( 2 ) private( ii, jj, kk )
+	for( ii = 0; ii < N_cell_x; ++ii )
+	for( jj = 0; jj < N_cell_x; ++jj )
+	for( kk = 0; kk < N_cell_x; ++kk ) Mapp[ Ind(ii,jj,kk) ] *= fac ;
+
+} //End of Intensity()

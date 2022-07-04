@@ -31,25 +31,25 @@ void Cloud_in_Cell_Buffered( std::valarray<float>& Pos_x,
 
 	for( uint_fast64_t num = 0; num < buff_sz; ++num ) {
 
-		i = static_cast<uint_fast64_t>( floorf( Pos_x[ num ] ) ) ;
-		j = static_cast<uint_fast64_t>( floorf( Pos_y[ num ] ) ) ;
-		k = static_cast<uint_fast64_t>( floorf( Pos_z[ num ] ) ) ;
+		i = static_cast<int>( floorf( Pos_x[ num ] ) ) ;
+		j = static_cast<int>( floorf( Pos_y[ num ] ) ) ;
+		k = static_cast<int>( floorf( Pos_z[ num ] ) ) ;
 
 		for( ii=0; ii<=1; ++ii ) {
 
-			wx = 1.0 - fabsf( Pos_x[ num ] - static_cast<float>(i + ii) ) ;
+			wx = 1.0 - fabs( Pos_x[ num ] - (i + ii) ) ;
 
 			ix = (i + ii) % N_cell_x ;
 
 			for( jj=0; jj<=1; ++jj ) {
 
-				wy = 1.0 - fabsf( Pos_y[ num ] - static_cast<float>(j + jj) ) ;
+				wy = 1.0 - fabs( Pos_y[ num ] - (j + jj) ) ;
 
 				jy = (j + jj) % N_cell_x ;
 
 				for( kk=0; kk<=1; ++kk ) {
 
-					wz = 1.0 - fabsf( Pos_z[ num ] - static_cast<float>(k + kk) ) ;
+					wz = 1.0 - fabs( Pos_z[ num ] - (k + kk) ) ;
 
 					kz = (k + kk) % N_cell_x ;
 

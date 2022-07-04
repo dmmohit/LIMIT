@@ -13,7 +13,7 @@ vpath %.hh  $(IDIR)
 LIM_p3m_halos: $(OBJS)
 	$(CPP) -o $@ $^ $(CFLAGS) $(OPT) -fopenmp
 
-$(OBJDIR)/main.o: main.cc process_buffered.hh
+$(OBJDIR)/main.o: main.cc read_param.hh process_buffered.hh
 	$(CPP) $< -c -o $@ $(CFLAGS) -I$(IDIR) $(OPT)
 
 $(OBJDIR)/process_buffered.o: process_buffered.cc read_halo.hh\
@@ -22,23 +22,26 @@ $(OBJDIR)/process_buffered.o: process_buffered.cc read_halo.hh\
 															map.hh
 	$(CPP) $< -c -o $@ $(CFLAGS) -I$(IDIR) $(OPT)
 
+$(OBJDIR)/read_param.o: read_param.cc
+	$(CPP) $< -c -o $@ $(CFLAGS)
+
 $(OBJDIR)/read_halos_buffered.o: read_halos_buffered.cc
-	$(CPP) $< -c -o $@ $(CFLAGS) -I$(IDIR) $(OPT)
+	$(CPP) $< -c -o $@ $(CFLAGS) -fopenmp
 
 $(OBJDIR)/grid_halos_buffered.o: grid_halos_buffered.cc
-	$(CPP) $< -c -o $@ $(CFLAGS) -I$(IDIR) $(OPT) -fopenmp
+	$(CPP) $< -c -o $@ $(CFLAGS) $(OPT) -fopenmp
 
 $(OBJDIR)/sfr_buffered.o: sfr_buffered.cc
-	$(CPP) $< -c -o $@ $(CFLAGS) -I$(IDIR) $(OPT) -fopenmp
+	$(CPP) $< -c -o $@ $(CFLAGS) $(OPT) -fopenmp
 
 $(OBJDIR)/lum_buffered.o: lum_buffered.cc
-	$(CPP) $< -c -o $@ $(CFLAGS) -I$(IDIR) $(OPT) -fopenmp
+	$(CPP) $< -c -o $@ $(CFLAGS) $(OPT) -fopenmp
 
 $(OBJDIR)/cloud_in_cell_buffered.o: cloud_in_cell_buffered.cc
-	$(CPP) $< -c -o $@ $(CFLAGS) -I$(IDIR) $(OPT)
+	$(CPP) $< -c -o $@ $(CFLAGS) $(OPT)
 
 $(OBJDIR)/Map.o: Map.cc
-	$(CPP) $< -c -o $@ $(CFLAGS) -I$(IDIR) $(OPT)
+	$(CPP) $< -c -o $@ $(CFLAGS) $(OPT)
 
 $(OBJS): | $(OBJDIR)
 $(OBJDIR):

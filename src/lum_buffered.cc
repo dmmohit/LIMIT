@@ -20,17 +20,35 @@ void Cii_Lum_Buffered( std::valarray<float>& Lum,
 
 	const float a = 0.8475, b = 7.2203 ;
 
-	const double solar_lum = 3.828e26 ;
-	const double mpc3_m3   = pow( 3.086e22, 3.0 ) ;
-	const double jansky    = 1e-26 ;
-//	const double H_fac     = 3.24e-20 ;
-
-	double fac = solar_lum * 157.7e-6 /
-		(mpc3_m3 * 4 * M_PI * Hubble(z) * jansky) ;
-
 #pragma omp parallel for num_threads( 4 )
 	for( i=0; i<buff_sz; ++i )
-//		Lum[i] = pow( 10.0, a*log10(Lum[i]) + b ) * fac ;
 		Lum[i] = pow( 10.0, a*log10( Lum[i] ) + b ) ;
 
 }
+
+void CO_Lum_Buffered( std::valarray<float>& Lum,
+											uint32_t buff_sz           ) {
+
+	uint_fast64_t i ;
+
+	const float del_mf     = 1.0                    ;
+	const float del_mf_fac = 1.0 / (del_mf * 1e-10) ;
+
+	const float alpha     = 1.11        ;
+	const float alpha_inv = 1.0 / alpha ;
+	const float beta      = 0.6         ;
+
+	const int8_t J  = 2                            ;
+	const float fac = 4.95e-5 * powf( 1.0*J, 3.0 ) ;
+
+#pragma omp parallel for num_threads( 4 )
+	for( i=0; i<buff_sz; ++i ) {
+
+		Lum[i] *= del_mf_fac ; //SFR_to_L-IR
+		Lum[i]  = powf( 10.0, (log10( Lum[i] ) - beta) * alpha_inv ) ;
+		//L-IR_to_L-CO_prime
+
+		Lum[i] *= fac ; // CO(2-1) line luminosity
+  }
+
+} // End of CO_Lum_Buffered()

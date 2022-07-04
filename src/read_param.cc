@@ -2,11 +2,11 @@
 #include  <fstream>
 #include  <cstdint>
 
-double Lambda  ;
-
-float h       ;
-float Omega_m ;
-float L_cMpc  ;
+double Lambda      ;
+float scaling_unit ;
+float h            ;
+float Omega_m      ;
+float L_cMpc       ;
 
 uint64_t N_cell_x_orig ;
 uint64_t N_cell_x      ;
@@ -32,8 +32,8 @@ void Read_Param( const char *file ) {
 		exit( EXIT_FAILURE );
 	}
 
-	inFile >> h >> Omega_m >> Lambda
-				 >> L_cMpc >> N_cell_x_orig >> N_cell_x >> Buf_sz ;
+	inFile >> h >> Omega_m >> Lambda >> L_cMpc
+				 >> N_cell_x_orig >> N_cell_x >> Buf_sz >> scaling_unit ;
 
 	inFile.close() ;
 

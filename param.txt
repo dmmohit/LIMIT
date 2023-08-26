@@ -1,11 +1,12 @@
 0.700
 0.270
-157.7e-6
+1.30e-3
 714.285714
 13824
 300
 100000000
-1.0
+5065041
+1.0e6
 
 # The parameters in this file are as follows:
 #

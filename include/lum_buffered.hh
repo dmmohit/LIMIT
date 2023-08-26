@@ -4,10 +4,8 @@
 #include <valarray>
 #include  <cstdint>
 
-void Cii_Lum_Buffered( std::valarray<float>&,
-											 uint32_t              ) ;
-
-void CO_Lum_Buffered ( std::valarray<float>&,
-											 uint32_t              ) ;
+void Cii_Lum_Buffered (std::valarray<float>&, uint32_t);
+void CO_Lum_Buffered (std::valarray<float>&, uint32_t);
+void CO_Lum_Buffered_1 (std::valarray<float>&, uint32_t);
 
 #endif

@@ -1,46 +1,48 @@
+#include <cstdint>
+#include <fstream>
 #include <iostream>
-#include  <fstream>
-#include  <cstdint>
-#include   <string>
+#include <string>
 
-#include "read_param.hh"
 #include "process_buffered.hh"
+#include "read_param.hh"
 
-std::string Dir    ;
-std::string Output ;
+std::string Dir;
+std::string Output;
 
-float z ;
+float z;
 
-int main( int argc, char *argv[] ) {
+int 
+main (int argc, char *argv[])
+{
+  Read_Param(argv[1]);
 
-	Read_Param( argv[1] ) ;
+  if (argv[2] == nullptr) {
 
-	if( argv[2] == nullptr ) {
+    std::cerr << "Error! File for paths not given!\n";
+    exit(EXIT_FAILURE);
+  }
 
-		std::cerr << "Error! File for paths not given!\n" ;
-		exit( EXIT_FAILURE ) ;
-	}
+  std::ifstream inFile{argv[2]};
 
-	std::ifstream inFile { argv[2] } ;
+  if (inFile.is_open() == false) {
 
-	if( inFile.is_open() == false ) {
+    std::cerr << "Error! File for paths cannot be opened!\n";
+    exit(EXIT_FAILURE);
+  }
 
-		std::cerr << "Error! File for paths cannot be opened!\n" ;
-		exit( EXIT_FAILURE ) ;
-	}
+  while ((inFile >> Dir >> z >> Output).eof() != true) {
 
-	while( (inFile >> Dir >> z >> Output).eof() != true ) {
+    LIM_Buffered();
 
-		LIM_Buffered() ;
+    std::cout << "\x1b[2K"
+              << "\x1b[0G"
+              << "Done for redshift: " << z << std::flush;
+  }
 
-		std::cout << "\x1b[2K" << "\x1b[0G"
-							<< "Done for redshift: " << z
-							<< std::flush ;
-	}
+  inFile.close();
 
-	inFile.close() ;
-
-	std::cout << "\x1b[2K" << "\x1b[0G"
-						<< "Done for all.\n"
-						<< std::flush ;
+  std::cout << "\x1b[2K"
+            << "\x1b[0G"
+            << "Done for all.\n"
+            << std::flush;
 }

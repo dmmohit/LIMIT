@@ -30,3 +30,6 @@ f.close ()
 data = data.reshape ((N1,N2,N3), order='C')
 ```
 "N1","N2", and "N3" are the number of grids along each axis of the intensity mapping cube, while "grid_size" is the size of the smallest cell in Mpc.
+
+## Acknowledgements
+If you are using this tool, please acknowledge the following reference:[https://ui.adsabs.harvard.edu/abs/2021MNRAS.507.2500M/abstract](https://ui.adsabs.harvard.edu/abs/2021MNRAS.507.2500M/abstract)

@@ -9,13 +9,12 @@
 1.0e6
 
 # The parameters in this file are as follows:
-#
-# 1st parameter -> h       ( hubble parameter                       )
-# 2nd parameter -> Omega_m ( matter density paramter                )
-# 3rd parameter -> Lambda  ( Wavelength of emission line in meters  )
-# 4th parameter -> L_cMpc  ( Length of Simulation side in cMpc      )
-# 5th parameter -> No. of cells in original simulation
+# 1st parameter -> h       (Hubble parameter)
+# 2nd parameter -> Omega_m (matter density parameter)
+# 3rd parameter -> Lambda  (Wavelength of emission line in meters)
+# 4th parameter -> L_cMpc  (Length of Simulation side in cMpc)
+# 5th parameter -> No. of cells in the original simulation
 # 6th parameter -> No. of desired cells after coarse-gridding
-# 7th parameter -> Buffer size ( No. of halos to read at once  )
-# 8th parameter -> Scaling unit ( A scaling constant to change
-#                                 the units of intensity ouptut )
+# 7th parameter -> Buffer size (No. of halos to read at once)
+# 8th parameter -> Conversion factor (Factor to convert halo mass units)
+# 9th parameter -> Scaling unit (A scaling constant to change the units of specific intensity)

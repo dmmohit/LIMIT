@@ -4,9 +4,11 @@
 #include <valarray>
 #include <cstdint>
 
-void Coarse_Grid_Buffered( std::valarray<float>&,
-													 std::valarray<float>&,
-													 std::valarray<float>&,
-													 uint32_t              ) ;
+void Coarse_Grid_Buffered(std::valarray<float>&,
+							std::valarray<float>&,
+							std::valarray<float>&,
+							std::valarray<float>&,
+							uint32_t
+						);
 
 #endif

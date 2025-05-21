@@ -52,24 +52,24 @@ void LIM_Buffered()
   uint32_t rem = N_halo % Buf_sz; // no. of halos remaining
 
   std::valarray<float> Pos_x(Buf_sz), Pos_y(Buf_sz), Pos_z(Buf_sz);
-  std::valarray<float> Lum(Buf_sz), Zgas(Buf_sz);
+  std::valarray<float> Vel_z(Buf_sz), Lum(Buf_sz), Zgas(Buf_sz);
 
-  std::array<char *, 5> buff{
+  std::array<char *, 6> buff{
       reinterpret_cast<char *>(&Pos_x[0]), reinterpret_cast<char *>(&Pos_y[0]),
-      reinterpret_cast<char *>(&Pos_z[0]), reinterpret_cast<char *>(&Lum[0]),
-      reinterpret_cast<char *>(&Zgas[0])};
+      reinterpret_cast<char *>(&Pos_z[0]), reinterpret_cast<char *>(&Vel_z[0]),
+      reinterpret_cast<char *>(&Lum[0]), reinterpret_cast<char *>(&Zgas[0])};
 
   std::valarray<float> Map(N_cell_x * N_cell_x * N_cell_x);
 
   Init_Map(Map);  // initialises voxels to 0
 
-  std::array<std::ifstream, 5> in;  // array of file pointers for the halo files
+  std::array<std::ifstream, 6> in;  // array of file pointers for the halo files
 
   File_Handler(in, 0);  // opens the halo files mentioned in the function; flag=0 --> open
 
   for (uint32_t i = 0; i < loop; ++i) {
     Read_Halos_Buffered(in, buff, Buf_sz);
-    Coarse_Grid_Buffered(Pos_x, Pos_y, Pos_z, Buf_sz);
+    Coarse_Grid_Buffered(Pos_x, Pos_y, Pos_z, Vel_z, Buf_sz);
     // Cii_Lum_Buffered_R22(Lum, Buf_sz); // assigns L_CII [L_sun units] to halos
     // Cii_Lum_Buffered_L18(Lum, Zgas, Buf_sz);  // assigns L_CII [L_sun units] to halos; accepts halos with nonzero metallicities only
     // CO_Lum_Buffered_Li16(Lum, Buf_sz);
@@ -81,7 +81,7 @@ void LIM_Buffered()
   }
 
   Read_Halos_Buffered(in, buff, rem);
-  Coarse_Grid_Buffered(Pos_x, Pos_y, Pos_z, rem);
+  Coarse_Grid_Buffered(Pos_x, Pos_y, Pos_z, Vel_z, rem);
   // Cii_Lum_Buffered_R22(Lum, rem);
   // Cii_Lum_Buffered_L18(Lum, Zgas, rem);
   // CO_Lum_Buffered_Li16(Lum, rem);

@@ -10,7 +10,7 @@ OPT     = -O2
 vpath %.cc $(SRC)
 vpath %.hh  $(IDIR)
 
-LIM_simulator: $(OBJS)
+LIMIT: $(OBJS)
 	$(CPP) -o $@ $^ $(CFLAGS) $(OPT) -fopenmp
 
 $(OBJDIR)/main.o: main.cc read_param.hh process_buffered.hh
@@ -46,5 +46,5 @@ $(OBJDIR):
 
 .PHONY: clean
 clean:
-	-rm -r LIM_simulator $(OBJDIR)
+	-rm -r LIMIT $(OBJDIR)
 

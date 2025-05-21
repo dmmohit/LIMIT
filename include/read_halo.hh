@@ -1,14 +1,15 @@
 #ifndef _READ_HALO_H
 #define _READ_HALO_H
+#define num_files 6
 
 #include <string>
 #include <valarray>
-#include    <array>
+#include <array>
 
-void File_Handler( std::array<std::ifstream,5>&,
-									 int8_t                       ) ;
+void File_Handler ( std::array<std::ifstream,num_files>&,
+					int8_t);
 
-void  Read_Halos_Buffered( std::array<std::ifstream,5>&,
-													 std::array<char*,5>&,
-													 uint32_t                     ) ;
+void  Read_Halos_Buffered ( std::array<std::ifstream,num_files>&,
+							std::array<char*,num_files>&,
+							uint32_t);
 #endif

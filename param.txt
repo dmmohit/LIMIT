@@ -1,12 +1,12 @@
-0.6775
-0.3089
-2.6e-3
-302.6
-2720
-340
-1000000
-1.47602e10
-1e6
+0.6704
+0.3183
+1.39e-3
+215.04
+3072
+384
+100000000
+1.491647e10
+1.0e6
 
 # The parameters in this file are as follows:
 #
@@ -16,7 +16,7 @@
 # 4th parameter -> L_cMpc  ( Length of Simulation side in cMpc      )
 # 5th parameter -> No. of cells in original simulation
 # 6th parameter -> No. of desired cells after coarse-gridding
-# 7th parameter -> Buffer size ( No. of halos to read at once defaul=100000000 )
+# 7th parameter -> Buffer size ( No. of halos to read at once  )
 # 8th parameter -> Unit conversion ( Conversion from halo mass into solar mass units )
 # 9th parameter -> Scaling unit ( A scaling constant to change
 #                                 the units of intensity ouptut )

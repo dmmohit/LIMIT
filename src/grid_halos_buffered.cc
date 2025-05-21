@@ -1,19 +1,31 @@
 #include <cmath>
 #include <cstdint>
+// #include <iostream>
 #include <omp.h>
 #include <valarray>
 
+extern float L_cMpc;
 extern uint64_t N_cell_x_orig;
 extern uint64_t N_cell_x;
+extern float z;
+extern float h;
+extern float Omega_m;
 
-// Simply divides the halo positions by a factor N_original/N_new
+inline double Hubble (float zz) {
+  return 100 * h * sqrt(Omega_m * powf(1.0 + zz, 3.0) + (1.0 - Omega_m));
+}
+
+// Applies redshift space distortions and divides the halo positions by a factor N_original/N_new
 void Coarse_Grid_Buffered(std::valarray<float> &Pos_x,
                           std::valarray<float> &Pos_y,
-                          std::valarray<float> &Pos_z, uint32_t buff_sz) {
+                          std::valarray<float> &Pos_z,
+                          std::valarray<float> &Vel_z,
+                          uint32_t buff_sz) {
 
   uint_fast32_t i;
 
-  float fac = 1.0 / (1. * N_cell_x_orig / N_cell_x);
+  float fac = 1.0 / (1. * N_cell_x_orig / N_cell_x);  // rescaling factor
+  float gs = L_cMpc / N_cell_x_orig; // grid spacing
 
   #pragma omp parallel num_threads(4)
   {
@@ -32,7 +44,8 @@ void Coarse_Grid_Buffered(std::valarray<float> &Pos_x,
 
   #pragma omp for nowait
     for (i = 0; i < buff_sz; ++i) {
-      Pos_z[i] -= N_cell_x_orig * floorf(Pos_z[i] / N_cell_x_orig);
+      Pos_z[i] += (1+z) * Vel_z[i] / (Hubble(z) * gs);  // redshift space distortion
+      Pos_z[i] -= N_cell_x_orig * floorf(Pos_z[i] / N_cell_x_orig); // periodic boundary condition
       Pos_z[i] *= fac;
     }
   }

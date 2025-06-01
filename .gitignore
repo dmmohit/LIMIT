@@ -2,11 +2,6 @@ LIMIT
 catalogues/
 objdir/
 maps/
-*.bin
-ff.ipynb
 halo_density.c
-lcs.py
 noise.ipynb
 plot.ipynb
-*TNG*
-*cii*

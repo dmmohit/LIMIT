@@ -15,16 +15,17 @@
 
 extern std::string Dir;
 extern std::string Output;
-extern float z;
-extern float scaling_unit;
-extern float h;
-extern float Omega_m;
-extern double Lambda;
+extern float z; // redshift
+extern float scaling_unit;  // scaling unit for the output intensity maps
+extern float h; // Hubble constant in units of 100 km/s/Mpc
+extern float Omega_m; // matter density parameter
+extern double Lambda; // wavelength of the line in metres
 
-extern uint64_t N_cell_x_orig;
-extern uint64_t N_cell_x;
+extern uint64_t N_cell_x_orig;  // original number of cells in the grid
+extern uint64_t N_cell_x; // number of cells in the grid after coarse-gridding
 
-extern uint32_t Buf_sz;
+extern uint32_t Buf_sz; // buffer size for reading halos
+extern uint32_t rsd_flag;  // redshift space distortion flag
 
 inline double Hubble (float zz) {
 
@@ -69,7 +70,7 @@ void LIM_Buffered()
 
   for (uint32_t i = 0; i < loop; ++i) {
     Read_Halos_Buffered(in, buff, Buf_sz);
-    Coarse_Grid_Buffered(Pos_x, Pos_y, Pos_z, Vel_z, Buf_sz);
+    Coarse_Grid_Buffered(Pos_x, Pos_y, Pos_z, Vel_z, Buf_sz, rsd_flag);
     // Cii_Lum_Buffered_R22(Lum, Buf_sz); // assigns L_CII [L_sun units] to halos
     // Cii_Lum_Buffered_L18(Lum, Zgas, Buf_sz);  // assigns L_CII [L_sun units] to halos; accepts halos with nonzero metallicities only
     // CO_Lum_Buffered_Li16(Lum, Buf_sz);
@@ -81,7 +82,7 @@ void LIM_Buffered()
   }
 
   Read_Halos_Buffered(in, buff, rem);
-  Coarse_Grid_Buffered(Pos_x, Pos_y, Pos_z, Vel_z, rem);
+  Coarse_Grid_Buffered(Pos_x, Pos_y, Pos_z, Vel_z, rem, rsd_flag);
   // Cii_Lum_Buffered_R22(Lum, rem);
   // Cii_Lum_Buffered_L18(Lum, Zgas, rem);
   // CO_Lum_Buffered_Li16(Lum, rem);
@@ -174,7 +175,7 @@ void HI_Brightness_Temp_Wolz(std::valarray<float> &Mapp)
 }
 
 void HI_Brightness_Temp_Navarro(std::valarray<float> &Mapp)
-// returns value in mK; Villaescusa-Navarro et al. 2018
+// returns value in kelvin; Villaescusa-Navarro et al. 2018
 // matches with Spinelli et al. 2020 power spectrum
 {
   const float G = 6.67e-11; // gravitational constant
@@ -182,7 +183,7 @@ void HI_Brightness_Temp_Navarro(std::valarray<float> &Mapp)
   const float msun_to_kg = 1.99e30;
   const double mpc3_to_m3 = pow(3.086e22, 3.0);
   float rho_c = 3 * pow(Hubble(z)*Hubble_fac,2) / (8*M_PI*G); // critical density at redshift z (SI units)
-  double fac = 18900 * pow(h,2) * pow(1.0+z,2) * msun_to_kg / mpc3_to_m3;
+  double fac = 18.9 * pow(h,2) * pow(1.0+z,2) * msun_to_kg / mpc3_to_m3;
   fac /= Hubble(z) * rho_c;
 
   int_fast64_t ii, jj, kk;

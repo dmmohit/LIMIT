@@ -33,15 +33,10 @@ int main (int argc, char *argv[])
 
     LIM_Buffered();
 
-    std::cout << "\x1b[2K"
-              << "\x1b[0G"
-              << "Done for redshift: " << z << std::flush;
+    std::cout << "Done for redshift: " << z << std::flush << std::endl;
   }
 
   inFile.close();
 
-  std::cout << "\x1b[2K"
-            << "\x1b[0G"
-            << "Done for all.\n"
-            << std::flush;
+  std::cout << "Done for all.\n" << std::flush;
 }

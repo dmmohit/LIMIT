@@ -20,7 +20,8 @@ void Coarse_Grid_Buffered(std::valarray<float> &Pos_x,
                           std::valarray<float> &Pos_y,
                           std::valarray<float> &Pos_z,
                           std::valarray<float> &Vel_z,
-                          uint32_t buff_sz) {
+                          uint32_t buff_sz,
+                          uint32_t rsd_flag)  {
 
   uint_fast32_t i;
 
@@ -44,7 +45,8 @@ void Coarse_Grid_Buffered(std::valarray<float> &Pos_x,
 
   #pragma omp for nowait
     for (i = 0; i < buff_sz; ++i) {
-      Pos_z[i] += (1+z) * Vel_z[i] / (Hubble(z) * gs);  // redshift space distortion
+      if(rsd_flag == 1)
+        Pos_z[i] += (1+z) * Vel_z[i] / (Hubble(z) * gs);  // redshift space distortion
       Pos_z[i] -= N_cell_x_orig * floorf(Pos_z[i] / N_cell_x_orig); // periodic boundary condition
       Pos_z[i] *= fac;
     }
